@@ -8,3 +8,4 @@ Description: Checks how MOTU clustering thresholds alter network conclusions in 
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Imports: dplyr
