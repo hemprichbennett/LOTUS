@@ -1,11 +1,10 @@
 Package: lOTUs
 Type: Package
-Title: What the Package Does (Title Case)
+Title: lOTUs
 Version: 0.1.0
-Author: Who wrote it
+Author: Dave Hemprich-Bennett
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Checks how MOTU clustering thresholds alter network conclusions in bipartite networks
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
