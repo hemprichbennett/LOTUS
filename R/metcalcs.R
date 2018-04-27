@@ -5,7 +5,7 @@ metcalcs <- function(lis, indexes, netlevel = 'both'){
   }
 
 
-  m <- dplyr::melt(out)
+  m <- reshape2::melt(out)
   m <- m[,-2] #column two is just a tonne of 1s from the lapply etc, discard it
   colnames(m) <- c('metric', 'value', 'dataset', 'clustering')
   m$clustering <- as.numeric(m$clustering)
