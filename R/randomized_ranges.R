@@ -26,11 +26,11 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
       cat(nam, index_used, '\n')
       if(!is.na(network_level)){
         rand_list[[i]] <- lapply(networks[[i]], function(x)
-          replicate(1000, networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
+          replicate(1000, bipartite::networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
                                        index = index_used, level = network_level)))
       }else{
         rand_list[[i]] <- lapply(networks[[i]], function(x)
-          replicate(1000, networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
+          replicate(1000, bipartite::networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
                                        index = index_used)))
       }
 
