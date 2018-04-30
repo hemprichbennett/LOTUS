@@ -38,13 +38,17 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
     }
 
     if(out_format=='data.frame'){
-      mat <- matrix(nrow = 0, ncol = length(quantiles_to_return))
+      mat <- matrix(nrow = 0, ncol = 1+length(quantiles_to_return))
       for(a in 1:length(rand_list)){
-        #print(names(rand_list)[a])
-        mat <- rbind(mat, t(sapply(rand_list[[a]], function(x) quantile(x, probs=quantiles_to_return))))
+
+        m <- cbind(rep(names(rand_list)[a], length(rand_list[[a]])), t(sapply(rand_list[[a]], function(x) quantile(x, probs=quantiles_to_return))))
+        mat <- rbind(mat, m)
+        print(a)
+        print(mat)
       }
-      mat <- cbind(rownames(mat), rep(names(rand_list)[[a]], nrow(mat)), rep(index_used, nrow(mat)), mat)
-      outmat <- rbind(outmat, mat) #Something in creating this isn't right, it gave me crappy values in the clustering column for a trial. I think the loop is wrong.
+
+      mat <- cbind(rownames(mat),  rep(index_used, nrow(mat)), mat)
+      outmat <- rbind(outmat, mat)
       outmat <- as.data.frame(outmat)
       for(d in 4:ncol(outmat)){
         outmat[,d] <- as.numeric(as.character(outmat[,d]))
