@@ -4,6 +4,7 @@
 library(here)
 library(bipartite)
 library(ggplot2)
+library(DataExplorer)
 
 setwd('~/Dropbox/Education/PhD/Bat-diet/')
 getwd()
@@ -73,7 +74,7 @@ r_network_gen <- function(input_network, collapse_species = T, desired_species =
 
   #badsites <- c('DV88, 2016', 'MALUA, 2016', 'DV89, 2016') #These ones won't make viable networks for various reasons
   if(include_malua==F){
-    badsites <- c('DV88, 2016', 'SBE, 2016', 'DV89, 2016') #These ones won't make viable networks for various reasons
+    badsites <- c('DV88, 2016', 'SBE, 2016', 'DV89, 2016', 'DANUM, 2016', 'DANUM, 2017', 'MALIAU, 2016', 'MALIAU, 2017') #These ones won't make viable networks for various reasons
   }else{
     badsites <- c('DV88, 2016', 'DV89, 2016') #These ones won't make viable networks for various reasons
   }
@@ -162,7 +163,7 @@ r_network_gen <- function(input_network, collapse_species = T, desired_species =
   }
 
 }
-
+#Have modified this so that I'm only looking at SAFE networks, to make it quicker for testing
 
 
 
@@ -171,73 +172,77 @@ filenames <- list.files(pattern = 'all_post_QC_otus.txt.table_binary.out', recur
 filenames <- filenames[-grep('galaxy', filenames)]
 filenames <- filenames[-grep('lulu', filenames)]
 
+filenames <- filenames[c(1,2,3)] #We don't need to use the full datasets for this whilst
+
 rawnets <- lapply(filenames, read.table,  sep = '\t', header = F, stringsAsFactors = F)
 names(rawnets) <- gsub('.*\\/', '', dirname(filenames))
 netlists <- lapply(rawnets, r_network_gen, collapse_species = T, filter_species = T)
 names(netlists) <- names(rawnets)
 
-
-#Specify which index(s) to use
-
 ind <- c('connectance', 'web asymmetry')
-
-calctime <- c()
-for(i in 1:length(ind)){
-  s <- Sys.time()
-  networklevel(netlists$`91`$`SAFE, 2015`, index = ind[i])
-  f <- Sys.time()
-  calctime <- c(calctime, f-s)
-}
-
-timings <- data.frame(ind, calctime)
-
 sums_to_preserve = 'both'
 
-outmat <- matrix(nrow = 0, ncol = 4)
-for(index in 1:length(ind)){
-  index_used <- ind[index]
-  rand_list <- list()
-  for(i in 1:length(netlists)){
-    nam <- names(netlists)[i]
-    print(nam)
-    rand_list[[i]] <- lapply(netlists[[i]], function(x)
-      replicate(1000, networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
-                                   index = index_used)))
-    names(rand_list)[i] <- nam
+randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=1000, sums_to_preserve='both', out_format='df', quantiles_to_return=c(0.025, 0.975), summarise=T){
+  if(!out_format %in% c('list', 'df')){
+    stop('out_format is incorrect, can be either \'list\' or \'df\'')
+  }
+  if(!is.na(quantiles_to_return) && summarise==F){
+    stop('you have requested specific quantiles to be returned but then asked for the raw data. You can only have one of these. Perhaps return the raw data and then use the \'quantiles\' function on it yourself?')
+  }
+  if(!sums_to_preserve %in% c('none', 'rows', 'columns', 'both')){
+    stop('incorrect value for sums_to_preserve, acceptable values are \'none\', \'rows\', \'columns\', \'both\'')
   }
 
-  mat <- matrix(nrow = 0, ncol = 2)
-  for(a in 1:length(rand_list)){
-    print(names(rand_list)[a])
-    mat <- rbind(mat, t(sapply(rand_list[[i]], function(x) quantile(x, probs=c(0.025, 0.975)))))
+
+  if(out_format=='df'){
+    outmat <- matrix(nrow = 0, ncol = 3+length(quantiles_to_return))
   }
-  mat <- cbind(rownames(mat), rep(index_used, nrow(mat)), mat)
-  outmat <- rbind(outmat, mat)
+  if(out_format=='list'){
+    outlist <- list()
+  }
+
+
+  for(index in 1:length(indices)){
+    index_used <- indices[index]
+    rand_list <- list()
+    for(i in 1:length(networks)){
+      nam <- names(networks)[i]
+      cat(nam, index_used, '\n')
+      rand_list[[i]] <- lapply(networks[[i]], function(x)
+        replicate(1000, networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
+                                     index = index_used)))
+      names(rand_list)[i] <- nam
+    }
+
+    if(out_format=='df'){
+      mat <- matrix(nrow = 0, ncol = length(quantiles_to_return))
+      for(a in 1:length(rand_list)){
+        #print(names(rand_list)[a])
+        mat <- rbind(mat, t(sapply(rand_list[[a]], function(x) quantile(x, probs=quantiles_to_return))))
+      }
+      mat <- cbind(rownames(mat), rep(names(rand_list)[a], nrow(mat)), rep(index_used, nrow(mat)), mat)
+      outmat <- rbind(outmat, mat)
+      outmat <- as.data.frame(outmat)
+      for(d in 4:ncol(outmat)){
+        outmat[,d] <- as.numeric(as.character(outmat[,d]))
+      }
+
+    }
+    if(out_format=='list'){
+      outlist[[index_used]] <- rand_list
+    }
+  }
+
+  if(out_format=='df'){
+    colnames(outmat)[seq(1,3)] <- c('network', 'clustering', 'metric')
+    return(outmat)
+  }
+  if(out_format=='list'){
+    return(outlist)
+  }
 }
 
 
 
-
-
-rand_list <- list()
-for(i in 1:length(netlists)){
-  nam <- names(netlists)[i]
-  print(nam)
-  rand_list[[i]] <- lapply(netlists[[i]], function(x)
-    replicate(1000, networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
-                                 index = ind)))
-  names(rand_list)[i] <- nam
-}
-
-a <- lapply(netlists[[1]], function(x)
-  replicate(1000, networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
-                               index = ind)))
-#SOMETHINGS NOT WORKED the values are the same for each clustering level
-
-mat <- matrix(nrow = 0, ncol = 2)
-for(i in 1:length(rand_list)){
-  print(names(rand_list)[i])
-  mat <- rbind(mat, t(sapply(rand_list[[i]], function(x) quantile(x, probs=c(0.025, 0.975)))))
-}
-mat <- cbind(rownames(mat), rep(ind[1], nrow(mat)), mat) ###CHANGE THE IND WHEN THIS LOOPS
-#sapply(rand_list[[1]], function(x) quantile(x, probs=c(0.025, 0.975)))
+trial <- randomized_ranges(netlists, indices = 'togetherness', out_format = 'list', quantiles_to_return = c(0.025, 0.5, 0.975))
+plot_str(trial)
