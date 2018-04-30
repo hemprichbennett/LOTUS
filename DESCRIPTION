@@ -1,4 +1,4 @@
-Package: lOTUs
+Package: LOTUS
 Type: Package
 Title: Showing the effects of clustering on bipartite network data
 Version: 0.1.0
@@ -9,4 +9,4 @@ Description: Checks how MOTU clustering thresholds alter network conclusions in 
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-Imports: dplyr
+Imports: reshape2
