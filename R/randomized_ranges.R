@@ -11,7 +11,12 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
 
 
   if(out_format=='data.frame'){
-    outmat <- matrix(nrow = 0, ncol = 3+length(quantiles_to_return))
+    if(actual_vals==T){
+      outmat <- matrix(nrow = 0, ncol = 4+length(quantiles_to_return))
+    }else{
+      outmat <- matrix(nrow = 0, ncol = 3+length(quantiles_to_return))
+    }
+
   }
   if(out_format=='list'){
     penultimate_list <- list()
@@ -43,14 +48,26 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
     }
 
     if(out_format=='data.frame'){
-      mat <- matrix(nrow = 0, ncol = 1+length(quantiles_to_return))
-      for(a in 1:length(rand_list)){
-
-        m <- cbind(rep(names(rand_list)[a], length(rand_list[[a]])), t(sapply(rand_list[[a]], function(x) quantile(x, probs=quantiles_to_return))))
-        mat <- rbind(mat, m)
-        #print(a)
-        #print(mat)
+      if(actual_vals==T){
+        #Sort the matrix size
+      mat <- matrix(nrow = 0, ncol = 2+length(quantiles_to_return))
+      }else{
+        mat <- matrix(nrow = 0, ncol = 1+length(quantiles_to_return))
       }
+      for(a in 1:length(rand_list)){
+        #This creates a matrix for all networks of clustering level a, index i
+        m <- cbind(rep(names(rand_list)[a], length(rand_list[[a]])), t(sapply(rand_list[[a]], function(x) quantile(x, probs=quantiles_to_return))))
+        if(actual_vals==T){# Here we need to add to m the appropriate real values
+          m <- cbind(m, rep(NA, nrow(m)))
+          mat <- rbind(mat, m)
+
+        }else{
+          mat <- rbind(mat, m)
+        }
+
+
+      }
+      mat[,ncol(mat)] <- actual[actual$metric==index_used,'value']
 
       mat <- cbind(rownames(mat),  rep(index_used, nrow(mat)), mat)
       outmat <- rbind(outmat, mat)
@@ -67,7 +84,7 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
 
   if(out_format=='data.frame'){
     if(actual_vals==T){
-      outmat <- cbind(outmat, actual$value)
+      #outmat <- cbind(outmat, actual$value)
       colnames(outmat)[seq(1,3)] <- c('network', 'metric', 'clustering')
       colnames(outmat)[ncol(outmat)] <- 'actual'
       return(outmat)
