@@ -1,7 +1,7 @@
-metcalcs <- function(lis, indexes, netlevel = 'both'){
+metcalcs <- function(networks, indices, network_level = 'both'){
   out <- list()
-  for(i in 1:length(lis)){
-    out[[names(lis)[i]]] <- lapply(lis[[i]], function(x) as.matrix(networklevel(web = x, index = indexes, level = netlevel)))
+  for(i in 1:length(networks)){
+    out[[names(networks)[i]]] <- lapply(networks[[i]], function(x) as.matrix(networklevel(web = x, index = indices, level = network_level)))
   }
 
 
