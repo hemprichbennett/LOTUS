@@ -25,6 +25,9 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
 
   if(actual_vals==T){
     actual <- metcalcs(networks=networks, indices= indices, network_level = network_level)
+    actual$metric <- gsub('\\.', ' ', actual$metric)
+    actual$metric <- gsub(' HL', '', actual$metric)
+    actual$metric <- gsub(' LL', '', actual$metric)
   }
 
 #####Do the network generation and index calculation ####
@@ -68,6 +71,9 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
 
       }
       if(actual_vals==T){
+        print(index_used)
+        print(actual)
+
         mat[,ncol(mat)] <- actual[actual$metric==index_used,'value']
       }
 
