@@ -1,4 +1,4 @@
-randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=1000, sums_to_preserve='both', out_format='data.frame', quantiles_to_return=c(0.025, 0.975), summarise=T){
+randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=1000, sums_to_preserve='both', out_format='data.frame', quantiles_to_return=c(0.025, 0.975), summarise=T, actual_vals=F){
   if(!out_format %in% c('list', 'data.frame')){
     stop('out_format is incorrect, can be either \'list\' or \'data.frame\'')
   }
@@ -14,7 +14,12 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
     outmat <- matrix(nrow = 0, ncol = 3+length(quantiles_to_return))
   }
   if(out_format=='list'){
-    outlist <- list()
+    penultimate_list <- list()
+    out_list <- list()
+  }
+
+  if(actual_vals==T){
+    actual <- metcals(networks=networks, indices= indices, network_level = network_level)
   }
 
 #####Do the network generation and index calculation ####
@@ -56,15 +61,29 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
 
     }
     if(out_format=='list'){
-      outlist[[index_used]] <- rand_list
+      penultimate_list[[index_used]] <- rand_list
     }
   }
 
   if(out_format=='data.frame'){
-    colnames(outmat)[seq(1,3)] <- c('network', 'metric', 'clustering')
-    return(outmat)
+    if(actual_vals==T){
+      outmat <- cbind(outmat, actual$value)
+      colnames(outmat)[seq(1,3)] <- c('network', 'metric', 'clustering')
+      colnames(outmat)[ncol(outmat)] <- 'actual'
+      return(outmat)
+    }else{
+      colnames(outmat)[seq(1,3)] <- c('network', 'metric', 'clustering')
+      return(outmat)
+    }
+
   }
   if(out_format=='list'){
-    return(outlist)
+    if(actual_vals==T){
+      out_list$actual <- actual
+      out_list$randomized <- penultimate_list
+    }else{
+      return(penultimate_list)
+    }
+
   }
 }
