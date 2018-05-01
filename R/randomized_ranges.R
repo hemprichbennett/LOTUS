@@ -67,7 +67,10 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
 
 
       }
-      mat[,ncol(mat)] <- actual[actual$metric==index_used,'value']
+      if(actual_vals==T){
+        mat[,ncol(mat)] <- actual[actual$metric==index_used,'value']
+      }
+
 
       mat <- cbind(rownames(mat),  rep(index_used, nrow(mat)), mat)
       outmat <- rbind(outmat, mat)
@@ -98,6 +101,7 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
     if(actual_vals==T){
       out_list$actual <- actual
       out_list$randomized <- penultimate_list
+      return(out_list)
     }else{
       return(penultimate_list)
     }
