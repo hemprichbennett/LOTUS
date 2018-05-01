@@ -19,7 +19,7 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
   }
 
   if(actual_vals==T){
-    actual <- metcals(networks=networks, indices= indices, network_level = network_level)
+    actual <- metcalcs(networks=networks, indices= indices, network_level = network_level)
   }
 
 #####Do the network generation and index calculation ####
