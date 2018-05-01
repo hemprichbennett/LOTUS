@@ -23,7 +23,7 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
     rand_list <- list()
     for(i in 1:length(networks)){
       nam <- names(networks)[i]
-      cat(nam, index_used, '\n')
+      #cat(nam, index_used, '\n')
       if(!is.na(network_level)){
         rand_list[[i]] <- lapply(networks[[i]], function(x)
           replicate(1000, bipartite::networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
@@ -43,8 +43,8 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
 
         m <- cbind(rep(names(rand_list)[a], length(rand_list[[a]])), t(sapply(rand_list[[a]], function(x) quantile(x, probs=quantiles_to_return))))
         mat <- rbind(mat, m)
-        print(a)
-        print(mat)
+        #print(a)
+        #print(mat)
       }
 
       mat <- cbind(rownames(mat),  rep(index_used, nrow(mat)), mat)
@@ -61,7 +61,7 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
   }
 
   if(out_format=='data.frame'){
-    colnames(outmat)[seq(1,3)] <- c('network', 'clustering', 'metric')
+    colnames(outmat)[seq(1,3)] <- c('network', 'metric', 'clustering')
     return(outmat)
   }
   if(out_format=='list'){
