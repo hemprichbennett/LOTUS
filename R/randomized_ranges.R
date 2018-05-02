@@ -28,6 +28,7 @@ randomized_ranges <- function(networks, indices, network_level = 'both', n_perm=
     actual$metric <- gsub('\\.', ' ', actual$metric)
     actual$metric <- gsub(' HL', '', actual$metric)
     actual$metric <- gsub(' LL', '', actual$metric)
+    actual$metric <- gsub('ISA', 'interaction strength asymmetry', actual$metric)
   }
 
 #####Do the network generation and index calculation ####
