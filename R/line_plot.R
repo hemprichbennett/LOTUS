@@ -1,4 +1,18 @@
 line_plot <- function(input, network, clustering, metric, value, plotname = NULL){
+  #' Returns a figure showing how conclusions could change over MOTU clustering thresholds
+  #'
+  #' @param input an input data frame, as output fully-formatted by the metcalcs function
+  #' @param network the network column of the data frame
+  #' @param clustering the clustering level column of the data frame
+  #' @param metric the column of the data frame containing the metrics desired for analysis
+  #' @param value the column of the data frame containing the values obtained for each metric
+  #' @param A title for the plot, defaults to none
+  #' @return Produces a simple plot showing which metrics are robust in your dataset to clustering-level effects
+  #' @seealso \code{\link{metcalcs}} which this function visualises the output of
+  #' @export
+  #' @examples
+  #' line_plot(input = m, metric = 'metric', network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'Sabah dataset')
+  #' str_length(c("i", "like", "programming", NA))
   rankings_mat <- matrix(nrow = length(unique(input$network)), ncol = length(unique(input$clustering)))
   colnames(rankings_mat) <- unique(input$clustering)
   ms <- as.character(c())
