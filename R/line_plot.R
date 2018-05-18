@@ -1,26 +1,34 @@
-line_plot <- function(df, dataset, clustering, metric, value, plotname = NULL){
-  rankings_mat <- matrix(nrow = length(unique(df$dataset)), ncol = length(unique(df$clustering)))
-  colnames(rankings_mat) <- unique(df$clustering)
+line_plot <- function(input, network, clustering, metric, value, plotname = NULL){
+  rankings_mat <- matrix(nrow = length(unique(input$network)), ncol = length(unique(input$clustering)))
+  colnames(rankings_mat) <- unique(input$clustering)
   ms <- as.character(c())
   clusts <- c()
   ns <- c()
-  for(i in 1:length(unique(df$metric))){
+  n_nets <- length(unique(input$network))
+  #cat('n_nets is ', n_nets,'\n')
+  for(i in 1:length(unique(input$metric))){
     #for(i in 1:1){
-
-    met <- unique(df$metric)[i]
-    metric_subset <- df[which(df$metric==met),]
+    #print(i)
+    met <- unique(input$metric)[i]
+    #print(met)
+    metric_subset <- input[which(input$metric==met),]
+    #print(metric_subset)
     #Make the appropriate subset of the data to play with
     for(a in 1:length(unique(metric_subset$clustering))){
       clust <- unique(metric_subset$clustering)[a]
       #print(clust)
       metric_and_cluster_subset <- metric_subset[which(metric_subset$clustering==clust),]
-      rankings_mat[,a] <- metric_and_cluster_subset[order(metric_and_cluster_subset$value),'dataset']
+      #print(metric_and_cluster_subset)
+      rankings_mat[,a] <- metric_and_cluster_subset[order(metric_and_cluster_subset$value),'network']
     }
+    #print(rankings_mat)
 
-    for(b in 1:ncol(rankings_mat)){#Starting from 2 as we have to calculate the similarity to the previous col
+    for(b in 1:ncol(rankings_mat)){
       cl <- as.numeric(colnames(rankings_mat)[b])
       if(b==1){##We need to do this step as otherwise our counting backwards will crash things: we want to see how similar the values are to the value before them, which is confusing for the first value in the loop
-        n <- 7
+        #cat('length(unique(input$metric)) is ', length(unique(input$metric)), '\n')
+        #cat('length(unique(input$network)) is ', length(unique(input$network)), '\n')
+        n <- n_nets
       }else{
         n <- length(which(rankings_mat[,(b-1)]==rankings_mat[,b]))
       }
@@ -53,20 +61,28 @@ line_plot <- function(df, dataset, clustering, metric, value, plotname = NULL){
   for(a in 1:length(unique(out_df$ms))){
     met <- unique(out_df$ms)[a]
     #print(met)
-    connectance_df <- out_df[which(out_df$ms == met),]
-    connectance_df$ms <- NULL
+
+    metric_df <- out_df[which(out_df$ms == met),]
+    #print(out_df)
+    metric_df$ms <- NULL
+    #print(metric_df)
     # dummy data
-    matches <- sample(0:2,100,replace=TRUE)
-    thresholds <- seq(90,100,length=100)
-    cbind(thresholds,matches)
+    #matches <- sample(0:2,100,replace=TRUE)
+    #thresholds <- seq(90,100,length=100)
+    #cbind(thresholds,matches)
 
 
 
     # which entries do we wish to count?
-    test <- rep(0,nrow(connectance_df))
+    test <- rep(0,nrow(metric_df))
+    #print(test)
     #df <- data.frame(thresholds,matches)
-    test[which(connectance_df$ns>6)] <- 1
-    df <- data.frame(connectance_df,test)
+    #cat('metric_df$ns', metric_df$ns, '\n')
+    #cat('n_nets -1', n_nets-1, '\n')
+    #print(length(unique(df$network)))
+    test[which(metric_df$ns>(n_nets-1))] <- 1
+    #print(test)
+    df <- data.frame(metric_df,test)
 
     #add dummy entries to ensure we pick up the correct start and end points
     df <- rbind(c(0,0,0),df)
