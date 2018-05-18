@@ -9,7 +9,7 @@ This code is for comparing how reliable your conclusions are in inter-network an
 
 (Dave Hemprich-Bennett, hemprich.bennett@gmail.com, @hammerheadbat)
 Extremely crude vignette:
-``
+```
 library(LOTUS)
 library(bipartite)
 library(ggplot2)
@@ -36,4 +36,4 @@ g
 
 
 line_plot(input = m, network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'trial datasets')
-``
+```
