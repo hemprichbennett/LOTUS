@@ -2,22 +2,21 @@
 % Please edit documentation in R/metcalcs.R
 \name{metcalcs}
 \alias{metcalcs}
-\title{Acts as a wrapper for bipartite's networklevel function, calculating the difference between your given network-level metrics for a series of networks and clustering thresholds}
+\title{calculate variance in network level metrics caused by MOTU clustering level
+
+Acts as a wrapper for bipartite's networklevel and computeModules functions, calculating the difference between your given network-level metrics for a series of networks and clustering thresholds}
 \usage{
 metcalcs(networks, indices, network_level = "both")
 }
 \arguments{
 \item{networks}{A nested list of networks, with the first list level corresponding to MOTU clustering thresholds, the second level corresponding to individual networks}
 
-\item{indices}{A vector of indices to be calculated. See the function networklevel in package bipartite for details}
+\item{indices}{A vector of indices to be calculated. See the functions networklevel and computeModules in package bipartite for details}
 
 \item{network_level}{The network level to analyse}
 }
 \value{
 Produces a dataframe showing which metrics are robust in your dataset to clustering-level effects
-}
-\description{
-Acts as a wrapper for bipartite's networklevel function, calculating the difference between your given network-level metrics for a series of networks and clustering thresholds
 }
 \examples{
 metcalcs(networks= batnets, indices = ind, network_level = 'higher')
