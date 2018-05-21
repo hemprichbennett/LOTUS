@@ -169,6 +169,6 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
     }
 
   }
-  abline(v=c(93,97),lty=2,col="gray")
+
 
 }
