@@ -1,4 +1,6 @@
 metcalcs <- function(networks, indices, network_level = 'both'){
+  #' @title calculate variance in network level metrics caused by MOTU clustering level
+  #'
   #' Acts as a wrapper for bipartite's networklevel function, calculating the difference between your given network-level metrics for a series of networks and clustering thresholds
   #'
   #' @param networks A nested list of networks, with the first list level corresponding to MOTU clustering thresholds, the second level corresponding to individual networks
