@@ -29,9 +29,11 @@ g <- ggplot(m , aes(x = clustering, y = value, color = network)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))
 g
-![alt text](example_images/scatterplot.pdf)
+
+![alt text](example_images/scatterplot.png)
 
 #Plot in a simpler manner using the inbuilt function
 line_plot(input = m, network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'trial datasets')
-![alt text](example_images/lineplot.pdf)
+
+![alt text](example_images/lineplot.png)
 
