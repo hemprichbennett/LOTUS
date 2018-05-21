@@ -23,7 +23,7 @@ ind <- c('functional complementarity',
                          'discrepancy',
                          'ISA')
 
-#Use the metcalcs function to see how the indices change                          
+# Use the metcalcs function to see how the indices change                          
 m <- metcalcs(networks= batnets, indices = ind, network_level = 'higher')
 
 #Plot them
@@ -39,7 +39,7 @@ g
 
 ![alt text](example_images/scatterplot.png)
 
-#Plot in a simpler manner using the inbuilt function
+# Plot in a simpler manner using the inbuilt function
 line_plot(input = m, network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'Batnets example')
 
 ![alt text](example_images/lineplot.png)
