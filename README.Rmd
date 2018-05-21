@@ -34,7 +34,7 @@ g <- ggplot(m , aes(x = clustering, y = value, color = network)) +<br/>
   scale_x_continuous(breaks = seq(91, 98, 1))+<br/>
   facet_wrap(~ metric, scales = 'free_y')+<br/>
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),<br/>
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))<br/>
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))<br/><br/>
 g
 
 ![alt text](example_images/scatterplot.png)
