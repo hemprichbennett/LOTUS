@@ -7,7 +7,7 @@ This code is for comparing how reliable your conclusions are in inter-network an
 
 
 
-#Example vignette
+# Example vignette
 
 library(LOTUS)
 
