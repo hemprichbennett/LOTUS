@@ -17,5 +17,16 @@ See the vignette for details
 \author{
 \strong{Maintainer}: David Hemprich-Bennett \email{hemprich.bennett@gmail.com}
 
+Authors:
+\itemize{
+  \item Stephen Le Comber \email{s.c.lecomber@qmul.ac.uk}
+}
+
+Other contributors:
+\itemize{
+  \item Rossiter Stephen \email{s.j.rossiter@qmul.ac.uk} [NA]
+  \item Clare Elizabeth \email{e.clare@qmul.ac.uk} [NA]
+}
+
 }
 \keyword{internal}
