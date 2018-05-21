@@ -19,10 +19,11 @@ g <- ggplot(m , aes(x = clustering, y = value, color = network)) +
   facet_wrap(~ metric, scales = 'free_y')+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))
-png('example_images/scatterplot.png')
+
+png('example_images/scatterplot.png', width = 650, height = 650)
 g
 dev.off()
 
-png('example_images/lineplot.png')
+png('example_images/lineplot.png', width = 650, height = 650)
 line_plot(input = m, network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'Batnets example')
 dev.off()
