@@ -4,6 +4,10 @@ This code is for comparing how reliable your conclusions are in inter-network an
 
 (Dave Hemprich-Bennett, hemprich.bennett@gmail.com, @hammerheadbat)
 
+
+
+
+#Example vignette
 library(LOTUS)
 library(ggplot2)
 data(batnets)
