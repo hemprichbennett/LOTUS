@@ -27,3 +27,4 @@ dev.off()
 png('example_images/lineplot.png', width = 650, height = 650)
 line_plot(input = m, network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'Batnets example')
 dev.off()
+
