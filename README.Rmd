@@ -1,8 +1,3 @@
----
-title: "Readme"
-output: output: rmarkdown::github_document
----
-
 Analysing the reliability of metrics across different MOTU clustering levels:
 
 This code is for comparing how reliable your conclusions are in inter-network analyses using metabarcoding data. I'd strongly recommend against using it for anything too serious yet as its all currently a bit unfinished. If you want to use it I'd advise contacting me first. The paper this code is supporting isn't submitted yet, and so manuals and data will be uploaded in due course.
@@ -20,8 +15,11 @@ ind <- desired_mets <- c('functional complementarity',
                          'nestedness',
                          'discrepancy',
                          'ISA')
+
+#Use the metcalcs function to see how the indices change                          
 m <- metcalcs(networks= batnets, indices = ind, network_level = 'higher')
 
+#Plot them
 g <- ggplot(m , aes(x = clustering, y = value, color = network)) +
   geom_point()+
   labs(x = 'clustering') +
@@ -31,7 +29,9 @@ g <- ggplot(m , aes(x = clustering, y = value, color = network)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))
 g
+![alt text](example_images/scatterplot.pdf)
 
-
+#Plot in a simpler manner using the inbuilt function
 line_plot(input = m, network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'trial datasets')
+![alt text](example_images/lineplot.pdf)
 ```
