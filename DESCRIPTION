@@ -2,8 +2,11 @@ Package: LOTUS
 Type: Package
 Title: Showing the effects of clustering on bipartite network data
 Version: 0.1.0
-Authors@R: person("David", "Hemprich-Bennett", email = "hemprich.bennett@gmail.com",
-  role = c("aut", "cre"))
+Date: 2018-05-21
+Authors@R: c(person("David", "Hemprich-Bennett", email = "hemprich.bennett@gmail.com",role = c("aut", "cre")),
+  person("Stephen", "Le Comber", email = "s.c.lecomber@qmul.ac.uk", role = "aut"),
+  person("Rossiter", "Stephen", email = "s.j.rossiter@qmul.ac.uk", role = "dgs"),
+  person("Clare", "Elizabeth", email = "e.clare@qmul.ac.uk", role = "dgs"))
 Maintainer: David Hemprich-Bennett <hemprich.bennett@gmail.com>
 Description: Checks how MOTU clustering thresholds alter network conclusions in bipartite networks
 License: What license is it under?
