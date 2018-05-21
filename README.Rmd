@@ -8,11 +8,14 @@ This code is for comparing how reliable your conclusions are in inter-network an
 
 
 #Example vignette
+
 library(LOTUS)
+
 library(ggplot2)
+
 data(batnets)
 
-ind <- desired_mets <- c('functional complementarity',
+ind <- c('functional complementarity',
                          'web asymmetry',
                          'Fisher alpha', 'mean number of shared partners',
                          'niche overlap',
@@ -24,13 +27,13 @@ ind <- desired_mets <- c('functional complementarity',
 m <- metcalcs(networks= batnets, indices = ind, network_level = 'higher')
 
 #Plot them
-g <- ggplot(m , aes(x = clustering, y = value, color = network)) +
-  geom_point()+
-  labs(x = 'clustering') +
-  geom_smooth(method = lm, se = T)+
-  scale_x_continuous(breaks = seq(91, 98, 1))+
-  facet_wrap(~ metric, scales = 'free_y')+
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+g <- ggplot(m , aes(x = clustering, y = value, color = network)) +<br/>
+  geom_point()+<br/>
+  labs(x = 'clustering') +<br/>
+  geom_smooth(method = lm, se = T)+<br/>
+  scale_x_continuous(breaks = seq(91, 98, 1))+<br/>
+  facet_wrap(~ metric, scales = 'free_y')+<br/>
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),<br/>
         panel.background = element_blank(), axis.line = element_line(colour = "black"))
 g
 
@@ -40,4 +43,3 @@ g
 line_plot(input = m, network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'Batnets example')
 
 ![alt text](example_images/lineplot.png)
-
