@@ -51,17 +51,21 @@ This asumes that you're working in a directory with two subdirectories, 'SAFE' a
 
 ![alt text](example_images/example_data_layout.png)
 ```
+#Make a vector of any files with 'binary' in their name
 filenames <- list.files(pattern = '*binary*', recursive = T)
 
+#Make subsets of this vector for your two networks
 safe_filenames <- filenames[grep('SAFE', filenames)]
 texas_filenames <- filenames[grep('Texas', filenames)]
 
+#Load the files into named lists
 SAFE <- lapply(safe_filenames, read.table, sep = '\t', header = T, stringsAsFactors = F)
 names(SAFE) <- gsub('^.*/', '', dirname(safe_filenames))
 
 texas <- lapply(texas_filenames, read.table, sep = '\t', header = T, stringsAsFactors = F)
 names(texas) <- gsub('^.*/', '', dirname(texas_filenames))
 
+#Make the final list from these objects
 netlist <- list(SAFE, texas)
 names(netlist) <- c('SAFE', 'Texas')
 ```
