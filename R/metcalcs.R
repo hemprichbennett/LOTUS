@@ -1,15 +1,31 @@
-metcalcs <- function(networks, indices, network_level = 'both'){
+metcalcs <- function(networks, indices, network_level = 'both', list_format = 'clust_net'){
   #' @title calculate variance in network level metrics caused by MOTU clustering level
   #'
   #' Acts as a wrapper for bipartite's networklevel and computeModules functions, calculating the difference between your given network-level metrics for a series of networks and clustering thresholds
   #'
-  #' @param networks A nested list of networks, with the first list level corresponding to MOTU clustering thresholds, the second level corresponding to individual networks
+  #' @param networks A nested list of networks
   #' @param indices A vector of indices to be calculated. See the functions networklevel and computeModules in package bipartite for details
   #' @param network_level The network level to analyse
+  #' @param list_format The input must be a nested list of networks, with the levels either being clustering, then network identity ('clust_net'), or network identity,
+  #' then clustering ('net_clust').
   #' @return Produces a dataframe showing which metrics are robust in your dataset to clustering-level effects
   #' @seealso \code{\link{line_plot}} for visualisation of the resulting data
   #' @export
   #' @examples metcalcs(networks= batnets, indices = ind, network_level = 'higher')
+
+  list_rev <-  function(ll) {#Function for standardising the input data
+    nms <- unique(unlist(lapply(ll, function(X) names(X))))
+    ll <- lapply(ll, function(X) setNames(X[nms], nms))
+    ll <- apply(do.call(rbind, ll), 2, as.list)
+    lapply(ll, function(X) X[!sapply(X, is.null)])
+  }#Function sourced from https://stackoverflow.com/questions/12723800/how-to-return-a-error-message-in-r/12723837#12723837
+
+  if(!list_format %in% c('clust_net', 'net_clust')){
+    stop("list_format must either be \'clust_net\' or \'net_clust\'")
+  }
+  if(list_format=='net_clust'){ #standardise the format
+    networks <- list_rev(networks)
+  }
 
   out <- list()
   modularity = F

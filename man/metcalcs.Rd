@@ -6,14 +6,18 @@
 
 Acts as a wrapper for bipartite's networklevel and computeModules functions, calculating the difference between your given network-level metrics for a series of networks and clustering thresholds}
 \usage{
-metcalcs(networks, indices, network_level = "both")
+metcalcs(networks, indices, network_level = "both",
+  list_format = "clust_net")
 }
 \arguments{
-\item{networks}{A nested list of networks, with the first list level corresponding to MOTU clustering thresholds, the second level corresponding to individual networks}
+\item{networks}{A nested list of networks}
 
 \item{indices}{A vector of indices to be calculated. See the functions networklevel and computeModules in package bipartite for details}
 
 \item{network_level}{The network level to analyse}
+
+\item{list_format}{The input must be a nested list of networks, with the levels either being clustering, then network identity ('clust_net'), or network identity,
+then clustering ('net_clust').}
 }
 \value{
 Produces a dataframe showing which metrics are robust in your dataset to clustering-level effects
