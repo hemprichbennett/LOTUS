@@ -1,5 +1,6 @@
 randomized_ranges <- function(networks, input_format = 'clust_net', indices, network_level = 'both', n_perm=1000, sums_to_preserve='both', summarise=T, quantiles_to_return=c(0.025, 0.975), out_format='data.frame', actual_vals=F){
-  #' @title Identify meaningful trends emerging from MOTU clustering thresholds
+  #' Identify meaningful trends emerging from MOTU clustering thresholds
+  #'
   #'
   #' Acts as a wrapper for the \code{\link{metcalcs}} function, randomising a networks across a series of clustering levels
   #'
