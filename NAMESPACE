@@ -2,3 +2,4 @@
 
 export(line_plot)
 export(metcalcs)
+export(randomized_ranges)
