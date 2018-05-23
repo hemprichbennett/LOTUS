@@ -5,9 +5,9 @@ This code is for comparing how reliable your conclusions are in inter-network an
 (Dave Hemprich-Bennett, hemprich.bennett@gmail.com, @hammerheadbat)
 
 
-
-```
 # Example vignette
+```
+
 
 library(LOTUS)
 
@@ -38,14 +38,24 @@ g <- ggplot(m , aes(x = clustering, y = value, color = network)) +
 g
 ```
 ![alt text](example_images/scatterplot.png)
+
+
+# Plot in a simpler manner using the inbuilt function
 ```
-## Plot in a simpler manner using the inbuilt function
 line_plot(input = m, network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'Batnets example')
 ```
 ![alt text](example_images/lineplot.png)
 
 
-#Beginner's example of loading in data from multiple datasets
+# Using the randomized ranges function on batnets
+```
+ran <- randomized_ranges(batnets, indices = c('connectance', 'web asymmetry'), network_level = 'higher', out_format = 'data.frame', quantiles_to_return = c(0.025, 0.975), actual_vals = T)
+head(ran)
+``` 
+![alt text](example_images/head_randomized.png)
+
+
+# Beginner's example of loading in data from multiple datasets
 
 This asumes that you're working in a directory with two subdirectories, 'SAFE' and 'Texas', with subdirectories corresponding to the clustering level used to generate them. E.g. screenshot below
 
@@ -71,13 +81,3 @@ names(netlist) <- c('SAFE', 'Texas')
 ```
 
 The object 'netlist' will then be in the format 'net_clust' for the metcalcs function
-
-```
-library(LOTUS)
-library(bipartite)
-library(reshape2)
-data(batnets)
-ran <- randomized_ranges(batnets, indices = c('connectance', 'web asymmetry'), network_level = 'higher', out_format = 'data.frame', quantiles_to_return = c(0.025, 0.975), actual_vals = T)
-head(ran)
-``` 
-![alt text](example_images/head_randomized.png)
