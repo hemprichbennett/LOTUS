@@ -78,15 +78,23 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
     for(i in 1:length(networks)){
       nam <- names(networks)[i]
       #cat(nam, index_used, '\n')
-      if(!is.na(network_level)){
+      if(index_used=='modularity'){
         rand_list[[i]] <- lapply(networks[[i]], function(x)
-          replicate(1000, bipartite::networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
-                                       index = index_used, level = network_level)))
+          replicate(1000, slot(bipartite::computeModules(web = permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]]), 'likelihood')))
+
+
       }else{
-        rand_list[[i]] <- lapply(networks[[i]], function(x)
-          replicate(1000, bipartite::networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
-                                       index = index_used)))
+        if(!is.na(network_level)){
+          rand_list[[i]] <- lapply(networks[[i]], function(x)
+            replicate(1000, bipartite::networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
+                                                    index = index_used, level = network_level)))
+        }else{
+          rand_list[[i]] <- lapply(networks[[i]], function(x)
+            replicate(1000, bipartite::networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
+                                                    index = index_used)))
+        }
       }
+
 
       names(rand_list)[i] <- nam
     }
