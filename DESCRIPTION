@@ -9,7 +9,7 @@ Authors@R: c(person("David", "Hemprich-Bennett", email = "hemprich.bennett@gmail
   person("Clare", "Elizabeth", email = "e.clare@qmul.ac.uk", role = "dgs"))
 Maintainer: David Hemprich-Bennett <hemprich.bennett@gmail.com>
 Description: Checks how MOTU clustering thresholds alter network conclusions in bipartite networks
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: reshape2, bipartite
