@@ -20,7 +20,7 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
   #' @seealso \code{\link{metcalcs}}
   #' @export
   #' @examples
-
+print('running new version')
   list_rev <-  function(ll) {#Function for standardising the input data
     nms <- unique(unlist(lapply(ll, function(X) names(X))))
     ll <- lapply(ll, function(X) setNames(X[nms], nms))
@@ -74,23 +74,27 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
 #####Do the network generation and index calculation ####
   for(index in 1:length(indices)){
     index_used <- indices[index]
+    print(index_used)
     rand_list <- list()
     for(i in 1:length(networks)){
       nam <- names(networks)[i]
       #cat(nam, index_used, '\n')
       if(index_used=='modularity'){
+        print('modulatity being calculated')
         rand_list[[i]] <- lapply(networks[[i]], function(x)
-          replicate(1000, slot(bipartite::computeModules(web = permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]]), 'likelihood')))
+          replicate(1000, slot(bipartite::computeModules(web = vegan::permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]]), 'likelihood')))
 
 
       }else{
+        print('calculating something that isnt modularity')
+        print(index_used)
         if(!is.na(network_level)){
           rand_list[[i]] <- lapply(networks[[i]], function(x)
-            replicate(1000, bipartite::networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
+            replicate(1000, bipartite::networklevel(vegan::permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
                                                     index = index_used, level = network_level)))
         }else{
           rand_list[[i]] <- lapply(networks[[i]], function(x)
-            replicate(1000, bipartite::networklevel(permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
+            replicate(1000, bipartite::networklevel(vegan::permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
                                                     index = index_used)))
         }
       }
