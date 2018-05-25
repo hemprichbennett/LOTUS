@@ -1,4 +1,4 @@
-line_plot <- function(input, network, clustering, metric, value, plotname = NULL){
+line_plot <- function(input, network, clustering, metric, value, plotname = NULL, colour = 'black'){
   #' Returns a figure showing how conclusions could change over MOTU clustering thresholds. Nb this function assumes that all datasets analysed using metcalcs were generated with the exact same clustering thresholds
   #'
   #' @param input An input data frame, as output fully-formatted by the metcalcs function
@@ -7,6 +7,7 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
   #' @param metric The column of the data frame containing the metrics desired for analysis
   #' @param value The column of the data frame containing the values obtained for each metric
   #' @param plotname A title for the plot, defaults to none
+  #' @param colour A palette of colours to plot. Defaults to plotting only in black
   #' @return Produces a simple plot showing which metrics are robust in your dataset to clustering-level effects
   #' @seealso \code{\link{metcalcs}} which this function visualises the output of
   #' @export
@@ -25,7 +26,7 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
     #for(i in 1:1){
     #print(i)
     met <- unique(input$metric)[i]
-    #print(met)
+    print(met)
     metric_subset <- input[which(input$metric==met),]
     #print(metric_subset)
     #Make the appropriate subset of the data to play with
@@ -34,8 +35,8 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
       #print(clust)
       metric_and_cluster_subset <- metric_subset[which(metric_subset$clustering==clust),]
       #print(metric_and_cluster_subset)
-      #print(metric_and_cluster_subset[order(metric_and_cluster_subset$value),'network'])
-      #print('\n')
+      print(metric_and_cluster_subset[order(metric_and_cluster_subset$value),'network'])
+      print('\n')
       rankings_mat[,a] <- metric_and_cluster_subset[order(metric_and_cluster_subset$value),'network']
     }
     #print(rankings_mat)
@@ -156,21 +157,34 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
     #lines(matrix(c(xmin,xmax,a,a),ncol=2,byrow=FALSE),lwd=0.5,col="red")
 
     # add lines showing matches
-    if(is.null(nrow(line_ends))){
-      lines(matrix(c(line_ends[1],line_ends[2],a,a),ncol=2,byrow=FALSE),lwd=3,col='black')
-    }
+    if(colour=='black'){
+      if(is.null(nrow(line_ends))){
+        lines(matrix(c(line_ends[1],line_ends[2],a,a),ncol=2,byrow=FALSE),lwd=3,col='black')
+      }
+      else if(nrow(line_ends>0)){ #Some of the metrics have zero lines, as they're so utterly shit.
+        #The if statement lets us skip them, as otherwise they crash it
+
+        for(i in 1:nrow(line_ends))
+        {
+          lines(matrix(c(line_ends[i,1],line_ends[i,2],a,a),ncol=2,byrow=FALSE),lwd=3,col='black')
+          #print(i)
+        }
+      }
+
+  }else{if(is.null(nrow(line_ends))){
+    lines(matrix(c(line_ends[1],line_ends[2],a,a),ncol=2,byrow=FALSE),lwd=3,col=colour[i])
+  }
     else if(nrow(line_ends>0)){ #Some of the metrics have zero lines, as they're so utterly shit.
       #The if statement lets us skip them, as otherwise they crash it
 
       for(i in 1:nrow(line_ends))
       {
-        lines(matrix(c(line_ends[i,1],line_ends[i,2],a,a),ncol=2,byrow=FALSE),lwd=3,col='black')
+        lines(matrix(c(line_ends[i,1],line_ends[i,2],a,a),ncol=2,byrow=FALSE),lwd=3,col=colour[i])
         #print(i)
       }
 
-    }
+  }
+}
 
   }
-
-
 }
