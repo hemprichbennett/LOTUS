@@ -1,5 +1,5 @@
 line_plot <- function(input, network, clustering, metric, value, plotname = NULL){
-  #' Returns a figure showing how conclusions could change over MOTU clustering thresholds
+  #' Returns a figure showing how conclusions could change over MOTU clustering thresholds. Nb this function assumes that all datasets analysed using metcalcs were generated with the exact same clustering thresholds
   #'
   #' @param input An input data frame, as output fully-formatted by the metcalcs function
   #' @param network The network column of the data frame
@@ -34,6 +34,8 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
       #print(clust)
       metric_and_cluster_subset <- metric_subset[which(metric_subset$clustering==clust),]
       #print(metric_and_cluster_subset)
+      #print(metric_and_cluster_subset[order(metric_and_cluster_subset$value),'network'])
+      #print('\n')
       rankings_mat[,a] <- metric_and_cluster_subset[order(metric_and_cluster_subset$value),'network']
     }
     #print(rankings_mat)

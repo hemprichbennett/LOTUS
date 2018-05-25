@@ -2,7 +2,7 @@
 % Please edit documentation in R/line_plot.R
 \name{line_plot}
 \alias{line_plot}
-\title{Returns a figure showing how conclusions could change over MOTU clustering thresholds}
+\title{Returns a figure showing how conclusions could change over MOTU clustering thresholds. Nb this function assumes that all datasets analysed using metcalcs were generated with the exact same clustering thresholds}
 \usage{
 line_plot(input, network, clustering, metric, value, plotname = NULL)
 }
@@ -23,7 +23,7 @@ line_plot(input, network, clustering, metric, value, plotname = NULL)
 Produces a simple plot showing which metrics are robust in your dataset to clustering-level effects
 }
 \description{
-Returns a figure showing how conclusions could change over MOTU clustering thresholds
+Returns a figure showing how conclusions could change over MOTU clustering thresholds. Nb this function assumes that all datasets analysed using metcalcs were generated with the exact same clustering thresholds
 }
 \examples{
 line_plot(input = m, metric = 'metric', network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'Sabah dataset')
