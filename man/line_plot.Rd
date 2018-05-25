@@ -5,7 +5,7 @@
 \title{Returns a figure showing how conclusions could change over MOTU clustering thresholds. Nb this function assumes that all datasets analysed using metcalcs were generated with the exact same clustering thresholds}
 \usage{
 line_plot(input, network, clustering, metric, value, plotname = NULL,
-  colour = "black")
+  colour = F, palette)
 }
 \arguments{
 \item{input}{An input data frame, as output fully-formatted by the metcalcs function}
@@ -20,7 +20,9 @@ line_plot(input, network, clustering, metric, value, plotname = NULL,
 
 \item{plotname}{A title for the plot, defaults to none}
 
-\item{colour}{A palette of colours to plot. Defaults to plotting only in black}
+\item{colour}{Should the plot be in colour?}
+
+\item{palette}{A palette of colours to plot}
 }
 \value{
 Produces a simple plot showing which metrics are robust in your dataset to clustering-level effects
