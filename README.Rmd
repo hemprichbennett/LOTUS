@@ -80,4 +80,6 @@ netlist <- list(SAFE, texas)
 names(netlist) <- c('SAFE', 'Texas')
 ```
 
-The object 'netlist' will then be in the format 'net_clust' for the metcalcs function
+The object 'netlist' will then be in the format 'net_clust' for the metcalcs function.
+
+Alternatively, to load in only a single network for use in metcalcs ('clust_only'), just follow the steps above for a single network only

@@ -6,8 +6,8 @@ metcalcs <- function(networks, indices, network_level = 'both', list_format = 'c
   #' @param networks A list of networks
   #' @param indices A vector of indices to be calculated. See the functions networklevel and computeModules in package bipartite for details
   #' @param network_level The network level to analyse
-  #' @param list_format The input must be a nested list of networks, with the levels either being clustering, then network identity ('clust_net'), or network identity,
-  #' then clustering ('net_clust').
+  #' @param list_format The input must be a list of networks. It can be a nested list with the levels either being clustering, then network identity ('clust_net'), or network identity,
+  #' then clustering ('net_clust'), or alternatively a list of only one network origin, with the names of the list items corresponding to the clustering levels used ('clust_only').
   #' @return Produces a dataframe showing which metrics are robust in your dataset to clustering-level effects
   #' @seealso \code{\link{line_plot}} for visualisation of the resulting data
   #' @export

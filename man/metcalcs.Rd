@@ -14,8 +14,8 @@ metcalcs(networks, indices, network_level = "both",
 
 \item{network_level}{The network level to analyse}
 
-\item{list_format}{The input must be a nested list of networks, with the levels either being clustering, then network identity ('clust_net'), or network identity,
-then clustering ('net_clust').}
+\item{list_format}{The input must be a list of networks. It can be a nested list with the levels either being clustering, then network identity ('clust_net'), or network identity,
+then clustering ('net_clust'), or alternatively a list of only one network origin, with the names of the list items corresponding to the clustering levels used ('clust_only').}
 }
 \value{
 Produces a dataframe showing which metrics are robust in your dataset to clustering-level effects
