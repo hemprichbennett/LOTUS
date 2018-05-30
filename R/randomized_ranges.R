@@ -20,7 +20,6 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
   #' @seealso \code{\link{metcalcs}}
   #' @export
   #' @examples
-print('running new version')
   list_rev <-  function(ll) {#Function for standardising the input data
     nms <- unique(unlist(lapply(ll, function(X) names(X))))
     ll <- lapply(ll, function(X) setNames(X[nms], nms))
@@ -46,7 +45,9 @@ print('running new version')
     input_format <- 'clust_net'
   }
   if(input_format=='clust_only'){
+    nams <- names(networks)
     networks <- list(networks)
+    names(networks)[[1]] <- nams
   }
 
 
@@ -74,20 +75,23 @@ print('running new version')
 #####Do the network generation and index calculation ####
   for(index in 1:length(indices)){
     index_used <- indices[index]
-    print(index_used)
+    #print(index_used)
     rand_list <- list()
     for(i in 1:length(networks)){
+      #print(names(networks)[i])
       nam <- names(networks)[i]
-      #cat(nam, index_used, '\n')
+      #print(nam)
+
+      cat(nam, index_used, '\n')
       if(index_used=='modularity'){
-        print('modulatity being calculated')
+        #print('modularity being calculated')
         rand_list[[i]] <- lapply(networks[[i]], function(x)
           replicate(1000, slot(bipartite::computeModules(web = vegan::permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]]), 'likelihood')))
 
 
       }else{
-        print('calculating something that isnt modularity')
-        print(index_used)
+        #print('calculating something that isnt modularity')
+        #print(index_used)
         if(!is.na(network_level)){
           rand_list[[i]] <- lapply(networks[[i]], function(x)
             replicate(1000, bipartite::networklevel(vegan::permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
@@ -111,6 +115,7 @@ print('running new version')
         mat <- matrix(nrow = 0, ncol = 1+length(quantiles_to_return))
       }
       for(a in 1:length(rand_list)){
+
         #This creates a matrix for all networks of clustering level a, index i
         m <- cbind(rep(names(rand_list)[a], length(rand_list[[a]])), t(sapply(rand_list[[a]], function(x) quantile(x, probs=quantiles_to_return))))
         if(actual_vals==T){# Here we need to add to m the appropriate real values
@@ -124,8 +129,7 @@ print('running new version')
 
       }
       if(actual_vals==T){
-        print(index_used)
-        print(actual)
+
 
         mat[,ncol(mat)] <- actual[actual$metric==index_used,'value']
       }
