@@ -82,7 +82,7 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
       nam <- names(networks)[i]
       #print(nam)
 
-      cat(nam, index_used, '\n')
+
       if(index_used=='modularity'){
         #print('modularity being calculated')
         rand_list[[i]] <- lapply(networks[[i]], function(x)
