@@ -145,7 +145,7 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
     }
 
     line_ends
-
+    #cat('nrow(line_ends) is ',nrow(line_ends),'\n')
     #These rows aren't in order yet, which would allow us to plot but would mess up the colour scheme. The below line sorts that
     if(!is.null(nrow(line_ends))){
       line_ends <- line_ends[order(line_ends[,1]),]
@@ -173,7 +173,9 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
       }
 
   }else{if(is.null(nrow(line_ends))){
-    lines(matrix(c(line_ends[1],line_ends[2],a,a),ncol=2,byrow=FALSE),lwd=3,col=palette[i])
+
+    lines(matrix(c(line_ends[1],line_ends[2],a,a),ncol=2,byrow=FALSE),lwd=3,col='black')
+    #lines(matrix(c(line_ends[1],line_ends[2],a,a),ncol=2,byrow=FALSE),lwd=3,col=palette[i])
   }
     else if(nrow(line_ends>0)){ #Some of the metrics have zero lines, as they're so utterly shit.
       #The if statement lets us skip them, as otherwise they crash it
