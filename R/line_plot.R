@@ -1,4 +1,4 @@
-line_plot <- function(input, network, clustering, metric, value, plotname = NULL, colour = F, palette){
+line_plot <- function(input, network, clustering, metric, value, plotname = NULL, colour = F, palette, x_lab = 'Clustering (%)'){
   #' Returns a figure showing how conclusions could change over MOTU clustering thresholds. Nb this function assumes that all datasets analysed using metcalcs were generated with the exact same clustering thresholds
   #'
   #' @param input An input data frame, as output fully-formatted by the metcalcs function
@@ -9,6 +9,7 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
   #' @param plotname A title for the plot, defaults to none
   #' @param colour Should the plot be in colour?
   #' @param palette A palette of colours to plot
+  #' @param x_lab The label to be used on the x-axis
   #' @return Produces a simple plot showing which metrics are robust in your dataset to clustering-level effects
   #' @seealso \code{\link{metcalcs}} which this function visualises the output of
   #' @export
@@ -74,7 +75,7 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
   #pdf('../Figures/reliable_range_bars.pdf')
   # empty plot
   par(mar=c(5,12,2.5,3))
-  plot(1,type="n",xlim=c(xmin,xmax),ylim=c(0,my_rows+1),axes=TRUE,xlab="clustering (%)", yaxt="n", ylab="",frame=FALSE)
+  plot(1,type="n",xlim=c(xmin,xmax),ylim=c(0,my_rows+1),axes=TRUE,xlab= x_lab, yaxt="n", ylab="",frame=FALSE)
   title(main = plotname)
   axis(2, at=1:length(unique(out_df$ms)), labels=unique(out_df$ms), las = 1, cex.axis=0.65)
   #for(a in 1:2){
