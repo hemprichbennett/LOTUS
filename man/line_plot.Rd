@@ -31,7 +31,8 @@ Produces a simple plot showing which metrics are robust in your dataset to clust
 Returns a figure showing how conclusions could change over MOTU clustering thresholds. Nb this function assumes that all datasets analysed using metcalcs were generated with the exact same clustering thresholds
 }
 \examples{
-line_plot(input = m, metric = 'metric', network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'Sabah dataset')
+m <- metcalcs(networks= batnets, indices =c('functional complementarity','web asymmetry', 'Fisher alpha'), network_level = 'higher')
+line_plot(input = m, metric = 'metric', network = 'network', clustering = 'clustering', value = 'value', plotname = 'Sabah dataset')
 }
 \seealso{
 \code{\link{metcalcs}} which this function visualises the output of

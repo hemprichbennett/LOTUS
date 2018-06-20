@@ -13,7 +13,8 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
   #' @seealso \code{\link{metcalcs}} which this function visualises the output of
   #' @export
   #' @examples
-  #' line_plot(input = m, metric = 'metric', network = 'network', clustering = 'clustering', metric = 'metric', value = 'value', plotname = 'Sabah dataset')
+  #' m <- metcalcs(networks= batnets, indices =c('functional complementarity','web asymmetry', 'Fisher alpha'), network_level = 'higher')
+  #' line_plot(input = m, metric = 'metric', network = 'network', clustering = 'clustering', value = 'value', plotname = 'Sabah dataset')
 
 
   rankings_mat <- matrix(nrow = length(unique(input$network)), ncol = length(unique(input$clustering)))

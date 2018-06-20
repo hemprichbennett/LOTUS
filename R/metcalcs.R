@@ -11,7 +11,8 @@ metcalcs <- function(networks, indices, network_level = 'both', list_format = 'c
   #' @return Produces a dataframe showing which metrics are robust in your dataset to clustering-level effects
   #' @seealso \code{\link{line_plot}} for visualisation of the resulting data
   #' @export
-  #' @examples metcalcs(networks= batnets, indices = ind, network_level = 'higher')
+  #' @examples
+  #' metcalcs(networks= batnets, indices =c('functional complementarity','web asymmetry', 'Fisher alpha'), network_level = 'higher')
 
   list_rev <-  function(ll) {#Function for standardising the input data
     nms <- unique(unlist(lapply(ll, function(X) names(X))))

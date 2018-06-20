@@ -24,7 +24,7 @@ Produces a dataframe showing which metrics are robust in your dataset to cluster
 Acts as a wrapper for bipartite's networklevel and computeModules functions, calculating the difference between your given network-level metrics for a series of networks and clustering thresholds
 }
 \examples{
-metcalcs(networks= batnets, indices = ind, network_level = 'higher')
+metcalcs(networks= batnets, indices =c('functional complementarity','web asymmetry', 'Fisher alpha'), network_level = 'higher')
 }
 \seealso{
 \code{\link{line_plot}} for visualisation of the resulting data
