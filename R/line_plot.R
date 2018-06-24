@@ -1,4 +1,4 @@
-line_plot <- function(input, network, clustering, metric, value, plotname = NULL, colour = F, palette, x_lab = 'Clustering (%)'){
+line_plot <- function(input, network, clustering, metric, value, plotname = NULL, colour = F, palette, x_lab = 'Clustering (%)', vertical_lines=NA){
   #' Returns a figure showing how conclusions could change over MOTU clustering thresholds. Nb this function assumes that all datasets analysed using metcalcs were generated with the exact same clustering thresholds
   #'
   #' @param input An input data frame, as output fully-formatted by the metcalcs function
@@ -10,6 +10,7 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
   #' @param colour Should the plot be in colour?
   #' @param palette A palette of colours to plot
   #' @param x_lab The label to be used on the x-axis
+  #' @param vertical_lines an integer or vector of integers stating where to locate vertical guide-lines on the plot
   #' @return Produces a simple plot showing which metrics are robust in your dataset to clustering-level effects
   #' @seealso \code{\link{metcalcs}} which this function visualises the output of
   #' @export
@@ -78,6 +79,11 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
   plot(1,type="n",xlim=c(xmin,xmax),ylim=c(0,my_rows+1),axes=TRUE,xlab= x_lab, yaxt="n", ylab="",frame=FALSE)
   title(main = plotname)
   axis(2, at=1:length(unique(out_df$ms)), labels=unique(out_df$ms), las = 1, cex.axis=0.65)
+
+  if(!is.na(vertical_lines)){
+    abline(v=vertical_lines, lty=2, col="gray")
+  }
+
   #for(a in 1:2){
   for(a in 1:length(unique(out_df$ms))){
     met <- unique(out_df$ms)[a]
@@ -193,3 +199,5 @@ line_plot <- function(input, network, clustering, metric, value, plotname = NULL
 
   }
 }
+
+
