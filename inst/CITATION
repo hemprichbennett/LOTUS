@@ -1,12 +1,8 @@
-year <- sub("-.*", "", meta$Date)
-note <- sprintf("R package version %s", meta$Version)
-
 bibentry(bibtype = "Manual",
-         title = "LOTUS v 0.1.0: Showing the effects of clustering on bipartite network data",
+         title = "Assessing the impact of taxon resolution on network structure, with implication for comparative ecology",
          author = c(person("David", "Hemprich-Bennett"),
                     person("Stephen", "Le Comber"),
                     person("Stephen", "Rossiter"),
                     person("Elizabeth", "Clare")),
-         year = year,
-         note = note,
-         url = "https://github.com/hemprichbennett/LOTUS")
+         publisher = 'bioRxiv',
+         year = 2018)
