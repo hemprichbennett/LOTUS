@@ -69,7 +69,7 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
     actual$metric <- gsub('\\.', ' ', actual$metric)
     actual$metric <- gsub(' HL', '', actual$metric)
     actual$metric <- gsub(' LL', '', actual$metric)
-    actual$metric <- gsub('ISA', 'interaction strength asymmetry', actual$metric)
+    #actual$metric <- gsub('ISA', 'interaction strength asymmetry', actual$metric)
   }
 
 #####Do the network generation and index calculation ####
@@ -129,6 +129,10 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
 
       }
       if(actual_vals==T){
+        print(actual)
+        if(index_used=='ISA'){
+          index_used <- 'interaction strength asymmetry'
+        }
 
 
         mat[,ncol(mat)] <- actual[actual$metric==index_used,'value']
