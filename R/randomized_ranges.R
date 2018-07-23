@@ -72,7 +72,7 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
     #actual$metric <- gsub('ISA', 'interaction strength asymmetry', actual$metric)
   }
 
-#####Do the network generation and index calculation ####
+  #####Do the network generation and index calculation ####
   for(index in 1:length(indices)){
     index_used <- indices[index]
     #print(index_used)
@@ -86,7 +86,7 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
       if(index_used=='modularity'){
         #print('modularity being calculated')
         rand_list[[i]] <- lapply(networks[[i]], function(x)
-          replicate(1000, slot(bipartite::computeModules(web = vegan::permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]]), 'likelihood')))
+          replicate(1000, slot(bipartite::computeModules(web = vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=1, method="quasiswap")$perm[[1]]), 'likelihood')))
 
 
       }else{
@@ -94,11 +94,11 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
         #print(index_used)
         if(!is.na(network_level)){
           rand_list[[i]] <- lapply(networks[[i]], function(x)
-            replicate(1000, bipartite::networklevel(vegan::permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
+            replicate(1000, bipartite::networklevel(vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=1, method="quasiswap")$perm[[1]],
                                                     index = index_used, level = network_level)))
         }else{
           rand_list[[i]] <- lapply(networks[[i]], function(x)
-            replicate(1000, bipartite::networklevel(vegan::permatfull(x, fixedmar=sums_to_preserve,mtype="count",times=1)$perm[[1]],
+            replicate(1000, bipartite::networklevel(vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=1, method="quasiswap")$perm[[1]],
                                                     index = index_used)))
         }
       }
@@ -110,7 +110,7 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
     if(out_format=='data.frame'){
       if(actual_vals==T){
         #Sort the matrix size
-      mat <- matrix(nrow = 0, ncol = 2+length(quantiles_to_return))
+        mat <- matrix(nrow = 0, ncol = 2+length(quantiles_to_return))
       }else{
         mat <- matrix(nrow = 0, ncol = 1+length(quantiles_to_return))
       }
