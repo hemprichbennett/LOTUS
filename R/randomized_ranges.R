@@ -1,4 +1,4 @@
-randomized_ranges <- function(networks, input_format = 'clust_net', indices, network_level = 'both', n_perm=1000, sums_to_preserve='both', summarise=T, quantiles_to_return=c(0.025, 0.975), out_format='data.frame', actual_vals=F){
+randomized_ranges <- function(networks, input_format = 'clust_net', indices, network_level = 'both', n_perm=1000, sums_to_preserve='both', summarise=T, quantiles_to_return=NA, out_format='data.frame', actual_vals=F){
   #' Identify meaningful trends emerging from MOTU clustering thresholds
   #'
   #'
@@ -86,7 +86,7 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
       if(index_used=='modularity'){
         #print('modularity being calculated')
         rand_list[[i]] <- lapply(networks[[i]], function(x)
-          replicate(1000, slot(bipartite::computeModules(web = vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=1, method="quasiswap")$perm[[1]]), 'likelihood')))
+          replicate(n_perm, slot(bipartite::computeModules(web = vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=1, method="quasiswap")$perm[[1]]), 'likelihood')))
 
 
       }else{
@@ -94,11 +94,11 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
         #print(index_used)
         if(!is.na(network_level)){
           rand_list[[i]] <- lapply(networks[[i]], function(x)
-            replicate(1000, bipartite::networklevel(vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=1, method="quasiswap")$perm[[1]],
+            replicate(n_perm, bipartite::networklevel(vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=1, method="quasiswap")$perm[[1]],
                                                     index = index_used, level = network_level)))
         }else{
           rand_list[[i]] <- lapply(networks[[i]], function(x)
-            replicate(1000, bipartite::networklevel(vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=1, method="quasiswap")$perm[[1]],
+            replicate(n_perm, bipartite::networklevel(vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=1, method="quasiswap")$perm[[1]],
                                                     index = index_used)))
         }
       }
