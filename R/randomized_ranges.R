@@ -1,4 +1,10 @@
-randomized_ranges <- function(networks, input_format = 'clust_net', indices, network_level = 'both', n_perm=1000, sums_to_preserve='both', summarise=T, quantiles_to_return=NA, out_format='data.frame', actual_vals=F){
+randomized_ranges <- function(networks,
+                              input_format = 'clust_net',
+                              indices, network_level = 'both', n_perm=1000,
+                              sums_to_preserve='both', summarise=T,
+                              quantiles_to_return=NA, out_format='data.frame',
+                              actual_vals=F,
+                              modularity_nperm = 1){
   #' Identify meaningful trends emerging from MOTU clustering thresholds
   #'
   #'
@@ -16,6 +22,7 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
   #' @param quantiles_to_return The quantiles desired if summarising the output
   #' @param out_format The format for the data to be output in. Either a dataframe ('data.frame') or list ('list')
   #' @param actual_vals Should the actual values for each network be calculated?
+  #' @param modularity_nperm If modularity if being calculated, how many iterations should be used for each randomized network?
   #' @return Produces either a dataframe or list for your desired metrics and randomisations
   #' @seealso \code{\link{metcalcs}}
   #' @export
@@ -86,7 +93,7 @@ randomized_ranges <- function(networks, input_format = 'clust_net', indices, net
       if(index_used=='modularity'){
         #print('modularity being calculated')
         rand_list[[i]] <- lapply(networks[[i]], function(x)
-          replicate(n_perm, slot(bipartite::computeModules(web = vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=1, method="quasiswap")$perm[[1]]), 'likelihood')))
+          replicate(n_perm, slot(bipartite::computeModules(web = vegan::permatswap(x, fixedmar=sums_to_preserve,mtype="count",times=modularity_nperm, method="quasiswap")$perm[[1]]), 'likelihood')))
 
 
       }else{
